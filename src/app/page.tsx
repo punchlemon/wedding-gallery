@@ -86,7 +86,7 @@ export default function Home() {
             transition={{ duration: 1, delay: 1.9 }}
             className="subtitle-elegant mb-16"
           >
-            June Fifteenth • Twenty Twenty-Five • Tokyo
+            2025.07.12 • Tokyo
           </motion.div>
 
           {/* Elegant CTA */}
