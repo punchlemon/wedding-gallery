@@ -57,8 +57,7 @@ export default function Home() {
             transition={{ duration: 1.5, delay: 1 }}
             className="font-script gradient-text mb-8 leading-tight text-center"
           >
-            <div className="text-6xl md:text-8xl">Yuki</div>
-            <div className="text-4xl md:text-5xl opacity-80 my-2">&</div>
+            <div className="text-6xl md:text-8xl mb-8">Yuki</div>
             <div className="text-6xl md:text-8xl">Yukihiro</div>
           </motion.h1>
           
@@ -71,22 +70,13 @@ export default function Home() {
             <div className="elegant-divider-long"></div>
           </motion.div>
           
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.6 }}
-            className="font-serif text-2xl md:text-3xl elegant-text mb-6"
-          >
-            A Celebration of Love & Commitment
-          </motion.p>
-          
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.9 }}
             className="subtitle-elegant mb-16"
           >
-            2025.07.12 • Tokyo
+            2025.07.12
           </motion.div>
 
           {/* Elegant CTA */}
