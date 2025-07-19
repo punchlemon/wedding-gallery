@@ -57,8 +57,8 @@ export default function Home() {
             transition={{ duration: 1.5, delay: 1 }}
             className="font-script gradient-text mb-8 leading-tight text-center"
           >
-            <div className="text-6xl md:text-8xl mb-8">Yuki</div>
-            <div className="text-6xl md:text-8xl">Yukihiro</div>
+            <div className="text-5xl sm:text-6xl md:text-8xl mb-6 md:mb-8">Yuki</div>
+            <div className="text-5xl sm:text-6xl md:text-8xl">Yukihiro</div>
           </motion.h1>
           
           <motion.div
@@ -74,7 +74,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.9 }}
-            className="subtitle-elegant mb-16"
+            className="subtitle-elegant mb-12 sm:mb-16"
           >
             2025.07.12
           </motion.div>
@@ -84,12 +84,13 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 2.2 }}
+            className="px-4"
           >
             <Link href="/gallery">
               <motion.button
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.98 }}
-                className="luxury-button"
+                className="luxury-button w-full sm:w-auto"
               >
                 View Our Collection
               </motion.button>

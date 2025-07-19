@@ -228,7 +228,7 @@ export default function Gallery() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={selectAllPhotos}
-              className="text-sm px-4 py-2 bg-white/20 text-white border-2 border-white/40 rounded-full font-medium"
+              className="text-sm px-4 py-2 bg-white/30 text-white border border-white/50 rounded-full font-medium shadow-lg backdrop-blur-sm"
             >
               {selectedPhotos.length === photos.length ? 'Clear All' : 'Select All'}
             </motion.button>
@@ -239,9 +239,13 @@ export default function Gallery() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleDownloadSelected}
-              className="text-sm px-5 py-2 bg-gold text-charcoal rounded-full shadow-lg font-semibold"
+              className="w-12 h-12 bg-white text-gold rounded-full shadow-lg flex items-center justify-center relative border-2 border-gold"
+              title={`Download ${selectedPhotos.length} photo${selectedPhotos.length > 1 ? 's' : ''}`}
             >
-              Download ({selectedPhotos.length})
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-gold">
+                <path d="M12 3V16M12 16L16 12M12 16L8 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9 21H15C16.1046 21 17 20.1046 17 19V18H7V19C7 20.1046 7.89543 21 9 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </motion.button>
           )}
         </div>
@@ -263,7 +267,7 @@ export default function Gallery() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={selectAllPhotos}
-              className="text-sm px-4 py-2 bg-white/20 text-white border-2 border-white/40 rounded-full font-medium"
+              className="text-sm px-4 py-2 bg-white/30 text-white border border-white/50 rounded-full font-medium shadow-lg backdrop-blur-sm"
             >
               {selectedPhotos.length === photos.length ? 'Clear All' : 'Select All'}
             </motion.button>
@@ -274,45 +278,50 @@ export default function Gallery() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleDownloadSelected}
-              className="text-sm px-5 py-2 bg-gold text-charcoal rounded-full shadow-lg font-semibold"
+              className="w-12 h-12 bg-white text-gold rounded-full shadow-lg flex items-center justify-center relative border-2 border-gold"
+              title={`Download ${selectedPhotos.length} photo${selectedPhotos.length > 1 ? 's' : ''}`}
             >
-              Download ({selectedPhotos.length})
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-gold">
+                <path d="M12 3V16M12 16L16 12M12 16L8 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9 21H15C16.1046 21 17 20.1046 17 19V18H7V19C7 20.1046 7.89543 21 9 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </motion.button>
           )}
         </div>
       </motion.div>
 
       {/* Gallery Content */}
-      <main className="px-8 sm:px-12 pt-24">
-        <div className="max-w-7xl mx-auto">
+      <main className="px-4 sm:px-6 pt-24">
+        <div className="max-w-full mx-auto px-2 md:px-4">
           {/* Photo Grid */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8 md:gap-12"
           >
             {photos.map((photo, index) => {
               const isSelected = selectedPhotos.includes(photo.id);
-              return (
-                <motion.div
+              return (                  <motion.div
                   key={photo.id}
                   initial={{ opacity: 0, y: 60 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.1 }}
-                  className="flex justify-center items-center"
+                  className="w-full"
                 >
                   <motion.button
                     onClick={() => togglePhotoSelection(photo.id)}
                     whileTap={{ scale: 0.98 }}
-                    className={`relative overflow-hidden transition-all duration-300 ${
+                    className={`relative overflow-hidden transition-all duration-300 w-full ${
                       isSelected 
-                        ? 'shadow-2xl transform scale-110 z-10' 
-                        : 'hover:shadow-lg'
+                        ? 'shadow-2xl transform scale-105 z-10' 
+                        : 'hover:shadow-lg scale-85'
                     }`}
                   >
                     {/* Photo in Square Tile */}
-                    <div className="relative w-full aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden flex items-center justify-center">
+                    <div className={`relative w-full aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden flex items-center justify-center transition-all duration-300 ${
+                      isSelected ? 'bg-gradient-to-br from-gold/10 to-rose-gold/10' : ''
+                    }`}>
                       <Image
                         src={photo.src}
                         alt={`Wedding photo ${photo.id}`}
@@ -323,7 +332,7 @@ export default function Gallery() {
                       
                       {/* Overlay for unselected state */}
                       {!isSelected && (
-                        <div className="absolute inset-0 bg-black/30 transition-all duration-300"></div>
+                        <div className="absolute inset-0 bg-black/40 transition-all duration-300"></div>
                       )}
                     </div>
                   </motion.button>
