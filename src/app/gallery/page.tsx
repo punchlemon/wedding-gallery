@@ -26,22 +26,60 @@ export default function Gallery() {
   const handleDownloadSelected = async () => {
     if (selectedPhotos.length === 0) return;
     
-    for (const photoId of selectedPhotos) {
-      const photo = photos.find(p => p.id === photoId);
-      if (photo) {
-        try {
-          const response = await fetch(photo.src);
-          const blob = await response.blob();
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `wedding_photo_${photo.id}.jpg`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        } catch (error) {
-          console.error('Download failed:', error);
+    // デバイス判定
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // スマホの場合：Web Share APIで複数画像を一度に共有（写真アプリ優先）
+      try {
+        // 全ての画像データを取得
+        const files = [];
+        for (const photoId of selectedPhotos) {
+          const photo = photos.find(p => p.id === photoId);
+          if (photo) {
+            const response = await fetch(photo.src);
+            const blob = await response.blob();
+            // 写真アプリに認識されやすいように明示的にimage/jpegとして設定
+            const file = new File([blob], `wedding_photo_${photo.id}.jpg`, { 
+              type: 'image/jpeg',
+              lastModified: Date.now()
+            });
+            files.push(file);
+          }
+        }
+        
+        // Web Share APIで複数ファイルを一度に共有（写真アプリ向けメタデータ）
+        if (navigator.share && navigator.canShare && navigator.canShare({ files })) {
+          await navigator.share({
+            files,
+            title: 'Wedding Photos',
+            text: `${files.length} wedding photos to save`
+          });
+        }
+        // Web Share API非対応の場合は何もしない（ポップアップなし）
+      } catch (err) {
+        console.error('Web Share APIエラー:', err);
+        // 共有失敗時も何もしない（ポップアップなし）
+      }
+    } else {
+      // PCの場合：従来通りのダウンロード
+      for (const photoId of selectedPhotos) {
+        const photo = photos.find(p => p.id === photoId);
+        if (photo) {
+          try {
+            const response = await fetch(photo.src);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `wedding_photo_${photo.id}.jpg`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+          } catch (error) {
+            console.error('Download failed:', error);
+          }
         }
       }
     }
