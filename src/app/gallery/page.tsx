@@ -312,27 +312,30 @@ export default function Gallery() {
                   <motion.button
                     onClick={() => togglePhotoSelection(photo.id)}
                     whileTap={{ scale: 0.98 }}
-                    className={`relative overflow-hidden transition-all duration-300 w-full ${
+                    className={`relative overflow-hidden transition-all duration-300 w-full outline-none focus:outline-none ${
                       isSelected 
                         ? 'shadow-2xl transform scale-105 z-10' 
                         : 'hover:shadow-lg scale-85'
                     }`}
                   >
                     {/* Photo in Square Tile */}
-                    <div className={`relative w-full aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden flex items-center justify-center transition-all duration-300 ${
+                    <div className={`relative w-full aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden transition-all duration-300 ${
                       isSelected ? 'bg-gradient-to-br from-gold/10 to-rose-gold/10' : ''
                     }`}>
                       <Image
                         src={photo.src}
                         alt={`Wedding photo ${photo.id}`}
-                        width={400}
-                        height={400}
-                        className="max-w-full max-h-full object-contain transition-all duration-300"
+                        fill
+                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, (max-width: 1536px) 20vw, 16vw"
+                        className="object-contain transition-all duration-300"
                       />
                       
                       {/* Overlay for unselected state */}
                       {!isSelected && (
-                        <div className="absolute inset-0 bg-black/40 transition-all duration-300"></div>
+                        <div 
+                          className="absolute inset-0 transition-all duration-300 z-20 pointer-events-none"
+                          style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
+                        ></div>
                       )}
                     </div>
                   </motion.button>

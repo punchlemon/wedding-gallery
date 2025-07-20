@@ -90,7 +90,14 @@ export default function Home() {
               <motion.button
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.98 }}
-                className="luxury-button w-full sm:w-auto"
+                className="luxury-button w-full sm:w-auto outline-none focus:outline-none border-none"
+                style={{
+                  WebkitAppearance: 'none',
+                  MozAppearance: 'none',
+                  appearance: 'none',
+                  WebkitTapHighlightColor: 'transparent',
+                  touchAction: 'manipulation'
+                }}
               >
                 View Our Collection
               </motion.button>
