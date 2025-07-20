@@ -322,13 +322,15 @@ export default function Gallery() {
                     <div className={`relative w-full aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden transition-all duration-300 ${
                       isSelected ? 'bg-gradient-to-br from-gold/10 to-rose-gold/10' : ''
                     }`}>
-                      <Image
-                        src={photo.src}
-                        alt={`Wedding photo ${photo.id}`}
-                        fill
-                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, (max-width: 1536px) 20vw, 16vw"
-                        className="object-contain transition-all duration-300"
-                      />
+                      <div className="relative w-full h-full bg-white shadow-sm">
+                        <Image
+                          src={photo.src}
+                          alt={`Wedding photo ${photo.id}`}
+                          fill
+                          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, (max-width: 1536px) 20vw, 16vw"
+                          className="object-contain transition-all duration-300 p-2"
+                        />
+                      </div>
                       
                       {/* Overlay for unselected state */}
                       {!isSelected && (
