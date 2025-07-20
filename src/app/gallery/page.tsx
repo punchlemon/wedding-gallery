@@ -217,18 +217,19 @@ export default function Gallery() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-charcoal/95 backdrop-blur-md border-b-2 border-gold px-4 py-4 shadow-lg lg:hidden"
+        className="fixed top-0 left-0 right-0 z-50 bg-charcoal/95 backdrop-blur-md px-4 py-4 shadow-lg lg:hidden"
       >
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <span className="text-sm font-semibold text-white bg-gold px-3 py-1 rounded-full">
+            <div className="text-white text-sm font-semibold px-3 py-1 rounded-full bg-white/30 backdrop-blur-sm drop-shadow-lg border border-white/40" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
               {selectedPhotos.length} / {photos.length}
-            </span>
+            </div>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={selectAllPhotos}
-              className="text-sm px-4 py-2 bg-white/30 text-white border border-white/50 rounded-full font-medium shadow-lg backdrop-blur-sm"
+              className="text-white text-sm px-4 py-2 bg-white/40 border border-white/60 rounded-full font-medium shadow-lg backdrop-blur-sm drop-shadow-lg"
+              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}
             >
               {selectedPhotos.length === photos.length ? 'Clear All' : 'Select All'}
             </motion.button>
@@ -239,10 +240,11 @@ export default function Gallery() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleDownloadSelected}
-              className="w-12 h-12 bg-white text-gold rounded-full shadow-lg flex items-center justify-center relative border-2 border-gold"
+              className="w-12 h-12 bg-white/30 text-white rounded-full shadow-lg flex items-center justify-center relative border border-white/60 backdrop-blur-sm drop-shadow-lg"
+              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}
               title={`Download ${selectedPhotos.length} photo${selectedPhotos.length > 1 ? 's' : ''}`}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-gold">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white drop-shadow-lg">
                 <path d="M12 3V16M12 16L16 12M12 16L8 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M9 21H15C16.1046 21 17 20.1046 17 19V18H7V19C7 20.1046 7.89543 21 9 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -256,18 +258,19 @@ export default function Gallery() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-charcoal/95 backdrop-blur-md border-b-2 border-gold px-8 py-4 shadow-lg hidden lg:block"
+        className="fixed top-0 left-0 right-0 z-50 bg-charcoal/95 backdrop-blur-md px-8 py-4 shadow-lg hidden lg:block"
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <span className="text-sm font-semibold text-white bg-gold px-3 py-1 rounded-full">
+            <span className="text-sm font-semibold text-white px-3 py-1 rounded-full bg-white/30 backdrop-blur-sm drop-shadow-lg border border-white/40" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
               {selectedPhotos.length} / {photos.length}
             </span>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={selectAllPhotos}
-              className="text-sm px-4 py-2 bg-white/30 text-white border border-white/50 rounded-full font-medium shadow-lg backdrop-blur-sm"
+              className="text-sm px-4 py-2 bg-white/40 text-white border border-white/60 rounded-full font-medium shadow-lg backdrop-blur-sm drop-shadow-lg"
+              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}
             >
               {selectedPhotos.length === photos.length ? 'Clear All' : 'Select All'}
             </motion.button>
@@ -278,10 +281,11 @@ export default function Gallery() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleDownloadSelected}
-              className="w-12 h-12 bg-white text-gold rounded-full shadow-lg flex items-center justify-center relative border-2 border-gold"
+              className="w-12 h-12 bg-white/30 text-white rounded-full shadow-lg flex items-center justify-center relative border border-white/60 backdrop-blur-sm drop-shadow-lg"
+              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}
               title={`Download ${selectedPhotos.length} photo${selectedPhotos.length > 1 ? 's' : ''}`}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-gold">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white drop-shadow-lg">
                 <path d="M12 3V16M12 16L16 12M12 16L8 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M9 21H15C16.1046 21 17 20.1046 17 19V18H7V19C7 20.1046 7.89543 21 9 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
