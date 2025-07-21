@@ -151,7 +151,7 @@ export default function Gallery() {
                   </svg>
                 </div>
               </motion.div>
-              <h1 className="font-serif text-4xl gradient-text mb-4">
+              <h1 className="font-script text-3xl sm:text-4xl lg:text-5xl gradient-text mb-6 leading-loose px-2 py-4">
                 Private Collection
               </h1>
               <div className="elegant-divider mb-6"></div>
