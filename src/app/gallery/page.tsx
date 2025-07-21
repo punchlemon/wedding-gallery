@@ -30,25 +30,36 @@ export default function Gallery() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
     if (isMobile) {
-      // スマホの場合：Web Share APIで複数画像を一度に共有（写真アプリ優先）
+      // スマホの場合：Web Share APIで全選択画像を一括共有
       try {
-        // 全ての画像データを取得
         const files = [];
+        
+        // 全選択画像を処理
         for (const photoId of selectedPhotos) {
           const photo = photos.find(p => p.id === photoId);
           if (photo) {
-            const response = await fetch(photo.src);
-            const blob = await response.blob();
-            // 写真アプリに認識されやすいように明示的にimage/jpegとして設定
-            const file = new File([blob], `wedding_photo_${photo.id}.jpg`, { 
-              type: 'image/jpeg',
-              lastModified: Date.now()
-            });
-            files.push(file);
+            try {
+              const response = await fetch(photo.src);
+              if (!response.ok) throw new Error(`Failed to fetch image ${photoId}`);
+              
+              const blob = await response.blob();
+              const file = new File([blob], `wedding_photo_${photo.id}.jpg`, { 
+                type: 'image/jpeg',
+                lastModified: Date.now()
+              });
+              files.push(file);
+            } catch (fetchError) {
+              console.error(`Failed to process image ${photoId}:`, fetchError);
+            }
           }
         }
         
-        // Web Share APIで複数ファイルを一度に共有（写真アプリ向けメタデータ）
+        if (files.length === 0) {
+          console.error('No images could be processed');
+          return;
+        }
+        
+        // Web Share APIで共有
         if (navigator.share && navigator.canShare && navigator.canShare({ files })) {
           await navigator.share({
             files,
@@ -56,10 +67,8 @@ export default function Gallery() {
             text: `${files.length} wedding photos to save`
           });
         }
-        // Web Share API非対応の場合は何もしない（ポップアップなし）
       } catch (err) {
         console.error('Web Share APIエラー:', err);
-        // 共有失敗時も何もしない（ポップアップなし）
       }
     } else {
       // PCの場合：従来通りのダウンロード
@@ -77,21 +86,14 @@ export default function Gallery() {
             a.click();
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
+            
+            // 少し待機
+            await new Promise(resolve => setTimeout(resolve, 200));
           } catch (error) {
             console.error('Download failed:', error);
           }
         }
       }
-    }
-  };
-
-  const selectAllPhotos = () => {
-    if (selectedPhotos.length === photos.length) {
-      // 全て選択されている場合は全ての選択を解除
-      setSelectedPhotos([]);
-    } else {
-      // 一部または何も選択されていない場合は全て選択
-      setSelectedPhotos(photos.map(photo => photo.id));
     }
   };
 
@@ -258,19 +260,8 @@ export default function Gallery() {
         className="fixed top-0 left-0 right-0 z-50 bg-charcoal/95 backdrop-blur-md px-4 py-4 shadow-lg lg:hidden"
       >
         <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <div className="text-white text-sm font-semibold px-3 py-1 rounded-full bg-white/30 backdrop-blur-sm drop-shadow-lg border border-white/40" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
-              {selectedPhotos.length} / {photos.length}
-            </div>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={selectAllPhotos}
-              className="text-white text-sm px-4 py-2 bg-white/40 border border-white/60 rounded-full font-medium shadow-lg backdrop-blur-sm drop-shadow-lg"
-              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}
-            >
-              {selectedPhotos.length === photos.length ? 'Clear All' : 'Select All'}
-            </motion.button>
+          <div className="text-white text-sm font-semibold px-3 py-1 rounded-full bg-white/30 backdrop-blur-sm drop-shadow-lg border border-white/40" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+            {selectedPhotos.length} / {photos.length}
           </div>
           
           {selectedPhotos.length > 0 && (
@@ -299,20 +290,9 @@ export default function Gallery() {
         className="fixed top-0 left-0 right-0 z-50 bg-charcoal/95 backdrop-blur-md px-8 py-4 shadow-lg hidden lg:block"
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <span className="text-sm font-semibold text-white px-3 py-1 rounded-full bg-white/30 backdrop-blur-sm drop-shadow-lg border border-white/40" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
-              {selectedPhotos.length} / {photos.length}
-            </span>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={selectAllPhotos}
-              className="text-sm px-4 py-2 bg-white/40 text-white border border-white/60 rounded-full font-medium shadow-lg backdrop-blur-sm drop-shadow-lg"
-              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}
-            >
-              {selectedPhotos.length === photos.length ? 'Clear All' : 'Select All'}
-            </motion.button>
-          </div>
+          <span className="text-sm font-semibold text-white px-3 py-1 rounded-full bg-white/30 backdrop-blur-sm drop-shadow-lg border border-white/40" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+            {selectedPhotos.length} / {photos.length}
+          </span>
           
           {selectedPhotos.length > 0 && (
             <motion.button
